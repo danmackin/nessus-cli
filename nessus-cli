@@ -2,15 +2,57 @@
 <?php
 include ("nessusfunctions.php");
 
-$nessus_host = 'https://localhost:8834';
+$shortopts = "";
+
+$longopts = array(
+  "host:",
+  "user:",
+  "pass:",
+  "scan",
+  "report",
+  "policy",
+);
+  
+$options = getopt($shortopts, $longopts);
+
+//var_dump($options);
+if (!isset($options["host"])) {
+  print("Must set hostname: --host https://somehost:8843 \n");
+}
+if (!isset($options["user"])) {
+  print("Must set user: --user someuser \n");
+}
+if (!isset($options["pass"])) {
+  print("Must set password: --pass somepass \n");
+}
+
+if (isset($options["scan"])) {
+  print("You want to do something with scans... \n");
+}
+if (isset($options["report"])) {
+  print("You want to do something with reports... \n");
+}
+if (isset($options["policy"])) {
+  print("You want to do something with policies... \n");
+}
+
+$nessus_host = (string) $options["host"];
+$user = (string) $options["user"];
+$pass = (string) $options["pass"];
+
+/*$nessus_host = 'https://localhost:8834';
 $user = 'dan';
-$pass = 'password';
+$pass = 'password';*/
+
+print($nessus_host . "\n");
+print($user . "\n");
+print($pass . "\n");
 
 $token = get_logintoken($nessus_host, $user, $pass);
 
 print('Token is: ' . $token . "\n");
 
-list_scan_jobs($nessus_host, $token);
+//list_scan_jobs($nessus_host, $token);
 
 //policy_list($nessus_host, $token);
 
