@@ -8,49 +8,90 @@ $longopts = array(
   "host:",
   "user:",
   "pass:",
-  "scan",
-  "report",
-  "policy",
+  "list::",
+  "scan::",
+  "id::",
+  "name::",
 );
   
 $options = getopt($shortopts, $longopts);
 
-//var_dump($options);
-if (!isset($options["host"])) {
+if (!isset($options["host"]) || !isset($options["user"]) || !isset($options["pass"])) {
   print("Must set hostname: --host https://somehost:8843 \n");
-}
-if (!isset($options["user"])) {
   print("Must set user: --user someuser \n");
-}
-if (!isset($options["pass"])) {
   print("Must set password: --pass somepass \n");
+  return 0;
+}
+else {
+  $nessus_host = $options["host"];
+  $user = $options["user"];
+  $pass = $options["pass"];
+
+  $token = get_logintoken($nessus_host, $user, $pass);
+  //print('Token is: ' . $token . "\n");
 }
 
 if (isset($options["scan"])) {
-  print("You want to do something with scans... \n");
+  if($options["scan"] == "start") {
+    print("Start...\n");
+  }
+  else if((($options["scan"] == "stop") || ($options["scan"] == "pause") || ($options["scan"] == "resume")) && isset($options["id"])) {
+    if ($options["id"]) {
+      if($options["scan"] == "stop") {
+        print("Stop...\n");
+      }
+      else if($options["scan"] == "pause") {
+        print("Pause...\n");
+      }
+      else if($options["scan"] == "resume") {
+        print("Resume...\n");
+      }
+    }
+    else {
+    print("Usage: --scan={stop|pause|resume} --id=<scan_id>\n");
+    }
+  }
+  /*else if(($options["scan"] == "stop") && isset($options["id"])) {
+    if ($options["id"]) {
+      print("Stop...\n");
+    }
+  }
+  else if(($options["scan"] == "pause") && isset($options["id"])) {
+    print("Pause...\n");
+    
+  }
+  else if(($options["scan"] == "resume") && isset($options["id"])) {
+    print("Resume...\n");
+  }*/
+  else {
+    print("Usage: --scan=start\n");
+    print("Or: --scan={stop|pause|resume} --id=<scan_id>\n");
+  }
 }
-if (isset($options["report"])) {
-  print("You want to do something with reports... \n");
+
+if (isset($options["list"])) {
+  //print("You want to list scans, reports, or policies... \n");
+  if($options["list"] == "scan") {
+    print("Listing scans...\n");
+    list_scan_jobs($nessus_host, $token);
+  }
+  else if($options["list"] == "report") {
+    print("Listing reports...\n");
+  }
+  else if($options["list"] == "policy") {
+    print("Listing policies...\n");
+    policy_list($nessus_host, $token);
+  }
+  else {
+    print("Usage: --scan={scan|report|policy}\n");
+  }
 }
-if (isset($options["policy"])) {
-  print("You want to do something with policies... \n");
-}
 
-$nessus_host = (string) $options["host"];
-$user = (string) $options["user"];
-$pass = (string) $options["pass"];
-
-/*$nessus_host = 'https://localhost:8834';
-$user = 'dan';
-$pass = 'password';*/
-
-print($nessus_host . "\n");
-print($user . "\n");
-print($pass . "\n");
-
+/*$nessus_host = $options["host"];
+$user = $options["user"];
+$pass = $options["pass"];
 $token = get_logintoken($nessus_host, $user, $pass);
-
-print('Token is: ' . $token . "\n");
+print('Token is: ' . $token . "\n");*/
 
 //list_scan_jobs($nessus_host, $token);
 
