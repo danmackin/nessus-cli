@@ -1,0 +1,27 @@
+#!/usr/bin/php -q
+<?php
+include ("nessusfunctions.php");
+
+$nessus_host = 'https://localhost:8834';
+$user = 'dan';
+$pass = 'password';
+
+$token = get_logintoken($nessus_host, $user, $pass);
+
+print('Token is: ' . $token . "\n");
+
+list_scan_jobs($nessus_host, $token);
+
+//policy_list($nessus_host, $token);
+
+//$externalscan_id = get_policy($nessus_host, $token, 'External Network Scan');
+
+/*$scan_id = get_scan_id($nessus_host, $token, 'Test');
+print('Running Scan: ' $scan_id . "\n");*/
+
+//print('External Network Scan Policy ID: ' . $externalscan_id . "\n");
+
+//$new_scan = launch_scan($nessus_host, $token, $externalscan_id, 'New Test Scan', 'localhost');
+
+//$paused = pause_scan($nessus_host, $token, $new_scan);
+
