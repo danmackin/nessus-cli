@@ -51,18 +51,6 @@ if (isset($options["scan"])) {
     print("Usage: --scan={stop|pause|resume} --id=<scan_id>\n");
     }
   }
-  /*else if(($options["scan"] == "stop") && isset($options["id"])) {
-    if ($options["id"]) {
-      print("Stop...\n");
-    }
-  }
-  else if(($options["scan"] == "pause") && isset($options["id"])) {
-    print("Pause...\n");
-    
-  }
-  else if(($options["scan"] == "resume") && isset($options["id"])) {
-    print("Resume...\n");
-  }*/
   else {
     print("Usage: --scan=start\n");
     print("Or: --scan={stop|pause|resume} --id=<scan_id>\n");
@@ -70,7 +58,6 @@ if (isset($options["scan"])) {
 }
 
 if (isset($options["list"])) {
-  //print("You want to list scans, reports, or policies... \n");
   if($options["list"] == "scan") {
     print("Listing scans...\n");
     list_scan_jobs($nessus_host, $token);
@@ -86,25 +73,4 @@ if (isset($options["list"])) {
     print("Usage: --scan={scan|report|policy}\n");
   }
 }
-
-/*$nessus_host = $options["host"];
-$user = $options["user"];
-$pass = $options["pass"];
-$token = get_logintoken($nessus_host, $user, $pass);
-print('Token is: ' . $token . "\n");*/
-
-//list_scan_jobs($nessus_host, $token);
-
-//policy_list($nessus_host, $token);
-
-//$externalscan_id = get_policy($nessus_host, $token, 'External Network Scan');
-
-/*$scan_id = get_scan_id($nessus_host, $token, 'Test');
-print('Running Scan: ' $scan_id . "\n");*/
-
-//print('External Network Scan Policy ID: ' . $externalscan_id . "\n");
-
-//$new_scan = launch_scan($nessus_host, $token, $externalscan_id, 'New Test Scan', 'localhost');
-
-//$paused = pause_scan($nessus_host, $token, $new_scan);
 
