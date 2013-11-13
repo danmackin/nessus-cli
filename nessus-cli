@@ -2,8 +2,6 @@
 <?php
 include ("nessusfunctions.php");
 
-#Testing
-
 $shortopts = "";
 
 $longopts = array(
