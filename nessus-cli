@@ -17,7 +17,7 @@ $longopts = array(
 $options = getopt($shortopts, $longopts);
 
 if (!isset($options["host"]) || !isset($options["user"]) || !isset($options["pass"])) {
-  print("Must set hostname: --host https://somehost:8843 \n");
+  print("Must set hostname: --host https://somehost:8834 \n");
   print("Must set user: --user someuser \n");
   print("Must set password: --pass somepass \n");
   return 0;
@@ -28,7 +28,7 @@ else {
   $pass = $options["pass"];
 
   $token = get_logintoken($nessus_host, $user, $pass);
-  //print('Token is: ' . $token . "\n");
+  print('Token is: ' . $token . "\n");
 }
 
 if (isset($options["scan"])) {
